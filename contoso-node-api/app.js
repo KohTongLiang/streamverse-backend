@@ -5,21 +5,21 @@ var path = require('path');
 // var bodyParser = require('body-parser');
 var logger = require('morgan');
 
-var dbClient = require('./db/index')
+// var dbClient = require('./db/index')
 var dbInitializationService = require('./db/dbInitialize')
 
-console.log('connecting to cosmosdb...')
-dbClient.connect()
-  .then(() => {
-    console.log("connected to the database successfully")
+// console.log('connecting to cosmosdb...')
+// dbClient.connect()
+//   .then(() => {
+//     console.log("connected to the database successfully")
 
-    /* uncomment next line to reset database when application
-     * starts. Appointments in db are flushed and regenerated */
-    // dbInitializationService.initializeDB();
-  })
-  .catch((e) => {
-    console.log(e)
-  })
+//     /* uncomment next line to reset database when application
+//      * starts. Appointments in db are flushed and regenerated */
+//     dbInitializationService.initializeDB();
+//   })
+//   .catch((e) => {
+//     console.log(e)
+//   })
 
 var indexRouter = require('./routes/index');
 var userProvisionRouter = require('./routes/user.routes');
@@ -27,7 +27,7 @@ var authRouter = require('./routes/auth.routes');
 var chatRouter = require('./routes/chat.routes');
 var doctorsRouter = require('./routes/doctor.routes');
 var appointmentsRouter = require('./routes/appointments.routes');
-var botRouter = require('./routes/bot.routes');
+// var botRouter = require('./routes/bot.routes');
 
 var app = express();
 
@@ -53,7 +53,7 @@ app.use('/auth', authRouter);
 app.use('/chat', chatRouter);
 app.use('/doctors', doctorsRouter);
 app.use('/appointments', appointmentsRouter);
-app.use('/bot', botRouter);
+// app.use('/bot', botRouter);
 
 app.get('/reset', async (req, res) => {
   await dbInitializationService.initializeDB();

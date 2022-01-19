@@ -12,6 +12,7 @@
     "@azure/communication-identity": "^1.0.0",
     "@azure/communication-signaling": "",
     "@azure/communication-sms": "",
+    "@azure/cosmos": "^3.15.0",
     "@azure/event-hubs": "^5.3.0",
     "axios": "^0.21.1",
     "bcryptjs": "^2.4.3",

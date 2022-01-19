@@ -1,9 +1,10 @@
 {
-    "mongodbConnection":"<COSMOS_DB_OR_MONGODB_CONNECTION_STRING>",
-    "dbName": "<DATABASE_NAME>",
-    "connectionString": "<AZURE_COMMUNICATION_SERVICES_CONNECTION_STRING>",
-    "jwtPrivateKey": "<JWT_PRIVATE_KEY_FOR_AUTHENTICATION>",
-    "endpoint": "<AZURE_COMMUNICATION_SERVICES_ENDPOINT>",
+    "cosmosEndpoint": "https://languye-sql-nb3.documents.azure.com:443/",
+    "cosmosKey": "G1Wlxck6MhT6w2LNjKmEObPVWLBbcdAio01Fyh1EYfcJPWt0fszjnuTxLIA8Kyd5T6EhAXYCllkWq8za0TaxHg==",
+    "dbName": "streamversedb",
+    "connectionString": "endpoint=https://streamverse.communication.azure.com/;accesskey=j5tPVp13bNH2s1jRIrz4O/GH4nW48YSTFobcoHJYDacY3N0qljkvKnlmmAViUm0R0kj+97EsHs8r7IA9havS7w==",
+    "jwtPrivateKey": "fna.s,dmnfa.,sdmfnoalskdjhflsdjflmfd.,md;lgkds;lkgjlsgj;flkgjfldk",
+    "endpoint": "https://streamverse.communication.azure.com",
     "smsLogicAppEndpoint": "<AZURE_COMMUNICATION_SERVICES_SMS_LOGIC_APP_HTTP_TRIGGER_ENDPOINT>",
     "qnaMakerEndpoint": "<QNA_MAKER_ENDPOINT_URL>",
     "qnaMakerEndpointKey": "<QNA_MAKER_ENDPOINT_KEY>"
