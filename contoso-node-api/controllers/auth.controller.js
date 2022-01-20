@@ -6,15 +6,14 @@ const { CommunicationIdentityClient } = require('@azure/communication-identity')
 const dbClient = require('../db/index')
 
 const login = async (req, res) => {
-
     // get email and password from POST body
-    const { email, password } = req.body;    
+    const { email, password } = req.body;
 
-    // find existing user    
+    // find existing user
     var userIdentity = await userService.getUser(email, password)
 
-    if (userIdentity !== undefined) {
-        var token = jwt.sign({ email: email, userType: 'Patient' }, config.jwtPrivateKey, { expiresIn: '1h' });
+    if (userIdentity !== undefined && userIdentity !== null) {
+        var token = jwt.sign({ email: email, userType: 'Players' }, config.jwtPrivateKey, { expiresIn: '1h' });
         
         let tokenResponse = await getTokenResponse(userIdentity)
 
@@ -26,35 +25,7 @@ const login = async (req, res) => {
             name: userIdentity.name,
             spoolID: tokenResponse.communicationUserId,
             spoolToken: tokenResponse.token,
-            userType: 'Patient'
-        });
-    }
-    else {
-        res.status(401).json({ message: "Invalid User "});
-    }
-}
-
-const doctorLogin = async (req, res) => {
-    // get email and password from POST body
-    const { email, password } = req.body;    
-
-    // find existing user    
-    var userIdentity = await userService.getDoctor(email, password)
-
-    if (userIdentity !== undefined) {
-        var token = jwt.sign({ email: email, userType: 'Doctor' }, config.jwtPrivateKey, { expiresIn: '1h' });
-        
-        let tokenResponse = await getTokenResponse(userIdentity)
-
-        // update the users list
-        await userService.updateSpoolIDForDoctor(tokenResponse.communicationUserId, tokenResponse.token, email)
-        res.status(200).json({
-            email: email,
-            token: token,
-            name: 'Dr. ' + userIdentity.name,
-            spoolID: tokenResponse.communicationUserId,
-            spoolToken: tokenResponse.token,
-            userType: 'Doctor'
+            userType: 'Player'
         });
     }
     else {
@@ -87,4 +58,3 @@ const getTokenResponse = async (userIdentity) => {
 }
 
 exports.login = login;
-exports.doctorLogin = doctorLogin;

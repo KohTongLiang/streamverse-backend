@@ -11,10 +11,10 @@ const dbClient = require("../db/index");
 // return a thread after provisioning
 // return a thread if already exists between
 // the given two pair of users
-const createThread = async (patientUser, threadName, doctorUser) => {
+const createThread = async (playerUser1, threadName, playerUser2) => {
   try {
-    let sender = await userService.findUser(patientUser);
-    let receiver = await userService.findDoctor(doctorUser);
+    let sender = await userService.findUser(playerUser1);
+    let receiver = await userService.findDoctor(playerUser2);
 
     var db = dbClient.getDB();
     let threads = await db.collection("Threads").find({}).toArray();
@@ -47,13 +47,13 @@ const createThread = async (patientUser, threadName, doctorUser) => {
       participants: [
         {
           id: {
-            communicationUserId: await spoolService.getSpoolID(patientUser, 'Patient')
+            communicationUserId: await spoolService.getSpoolID(playerUser1, 'Player1')
           },
           displayName: sender.name
         },
         {
           id: {
-            communicationUserId: await spoolService.getSpoolID(doctorUser, 'Doctor')
+            communicationUserId: await spoolService.getSpoolID(playerUser2, 'Player2')
           },
           displayName: receiver.name
         },

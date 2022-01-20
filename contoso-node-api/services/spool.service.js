@@ -5,7 +5,8 @@ const { CommunicationIdentityClient } = require("@azure/communication-identity")
 const config = require('../config.json')
 
 const getSpoolID = async (userEmail, userType) => {
-    var user = (userType == 'Doctor' ? await userService.findDoctor(userEmail) : await userService.findUser(userEmail));
+    // var user = (userType == 'Doctor' ? await userService.findDoctor(userEmail) : await userService.findUser(userEmail));
+    var user = await userService.findUser(userEmail);
     if (user.spoolID !== undefined) {
         return user.spoolID
     }

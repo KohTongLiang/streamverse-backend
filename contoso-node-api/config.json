@@ -1,6 +1,7 @@
 {
     "cosmosEndpoint": "https://languye-sql-nb3.documents.azure.com:443/",
     "cosmosKey": "G1Wlxck6MhT6w2LNjKmEObPVWLBbcdAio01Fyh1EYfcJPWt0fszjnuTxLIA8Kyd5T6EhAXYCllkWq8za0TaxHg==",
+    "mongodbConnection": "mongodb://streamversemongodb:gxEaZXHsTN4yobUaN8PFRY5uDLjs6ggsdIIdfzNzTo05fS9r4bk17Mf4F3Nh2ydm7HADyz6scljHvAuTaoSySQ==@streamversemongodb.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@streamversemongodb@",
     "dbName": "streamversedb",
     "connectionString": "endpoint=https://streamverse.communication.azure.com/;accesskey=j5tPVp13bNH2s1jRIrz4O/GH4nW48YSTFobcoHJYDacY3N0qljkvKnlmmAViUm0R0kj+97EsHs8r7IA9havS7w==",
     "jwtPrivateKey": "fna.s,dmnfa.,sdmfnoalskdjhflsdjflmfd.,md;lgkds;lkgjlsgj;flkgjfldk",

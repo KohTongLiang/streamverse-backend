@@ -3,38 +3,23 @@ const initData = require('./init.json')
 
 const initializeDB = async () => {
     var db = dbClient.getDB()
-
-    await db.collection("Doctors").deleteMany()
-    console.log('deleted doctors list...')
-
-    await db.collection("Patients").deleteMany()
-    console.log('deleted patients list...')
-
-    await db.collection("Appointments").deleteMany()
-    console.log('deleted appointments list...')
-
-    await db.collection("Threads").deleteMany()
-    console.log('deleted threads list...')
-
-    await db.collection("BotThreads").deleteMany()
-    console.log('deleted bot threads list...')
     
-    var doctorUsers = initData.doctors
-    var patientUsers = initData.patients
+    var players = initData.Players;
+    var gamestates = initData.Gamestates;
     
     // adding slots to all the doctors
-    doctorUsers.forEach(doctor => {
-        doctor.slots.push(...generateSlots())
-    })
+    // players.forEach(player => {
+    //     player.slots.push(...generateSlots())
+    // })
 
     try {
-        console.log('adding new doctors collection')
-        await db.collection("Doctors").insertMany(doctorUsers)
-        console.log('added doctors users')
+        console.log('adding new players collection')
+        await db.collection("Players").insertMany(players)
+        console.log('added playersers')
 
-        console.log('adding new patients collection')
-        await db.collection("Patients").insertMany(patientUsers)
-        console.log('added patient users')
+        console.log('adding new gamestates collection')
+        await db.collection("Gamestates").insertMany(gamestates)
+        console.log('added gamestates')
 
         console.log('Database initialization completed successfully.')
     } catch (e) {
