@@ -17,10 +17,10 @@ const getSpoolID = async (userEmail, userType) => {
             let userResponse = await identityClient.createUser();
             tokenResponse = await identityClient.getToken(userResponse, ["voip", "chat"]);
             
-            if (userType === 'Doctor') 
-                await userService.updateSpoolIDForDoctor(userResponse.communicationUserId, tokenResponse.token, userEmail)
-            else
-                await userService.updateSpoolID(userResponse.communicationUserId, tokenResponse.token, userEmail)
+            // if (userType === 'Doctor') 
+            //     await userService.updateSpoolIDForDoctor(userResponse.communicationUserId, tokenResponse.token, userEmail)
+            // else
+            await userService.updateSpoolID(userResponse.communicationUserId, tokenResponse.token, userEmail)
 
             return userResponse.communicationUserId
         }

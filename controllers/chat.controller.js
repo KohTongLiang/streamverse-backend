@@ -1,11 +1,10 @@
 const userService = require('../services/user.service')
-const chatService = require('../services/chat.service')
+const chatService = require('../services/chat.service');
 
 const createThread = async (req, res) => {
-    let primaryUsername = req.body.patientEmail;
-    let secondaryUsername = req.body.doctorEmail;
+    let primaryUsername = req.body.playerEmail;
 
-    let response = await chatService.createThread(primaryUsername, "Conversation", secondaryUsername);
+    let response = await chatService.createThread(primaryUsername, primaryUsername + "'s game'");
     res.status(200).json(response);
 }
 
@@ -13,5 +12,21 @@ const addUserToThread = async (req, res) => {
     res.status(501).send()
 }
 
+const updateGroupId = async (req, res) => {
+    let threadId = req.body.threadId;
+    let groupId = req.body.groupId;
+
+    let response = await chatService.updateGroupId(threadId, groupId);
+    res.status(200).json(response);
+}
+
+const findChat = async (req,res) => {
+    let player = req.body.playerEmail;
+    let response = await chatService.findChat(player);
+    res.status(200).json(response);
+}
+
 exports.createThread = createThread;
 exports.addUserToThread = addUserToThread;
+exports.updateGroupId = updateGroupId;
+exports.findChat = findChat;

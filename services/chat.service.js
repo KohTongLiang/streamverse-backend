@@ -3,18 +3,18 @@ const CommunicationUserCredential = require("@azure/communication-common").Azure
 const axios = require("axios");
 const config = require("../config.json");
 const userService = require("./user.service");
-const spoolService = require('./spool.service')
-
+const spoolService = require('./spool.service');
+const threadService = require('./thread.service');
 const dbClient = require("../db/index");
 
 // initialize chat client and
 // return a thread after provisioning
 // return a thread if already exists between
 // the given two pair of users
-const createThread = async (playerUser1, threadName, playerUser2) => {
+const createThread = async (playerUser1, threadName) => {
   try {
     let sender = await userService.findUser(playerUser1);
-    let receiver = await userService.findDoctor(playerUser2);
+    // let receiver = await userService.findUser(playerUser2);
 
     var db = dbClient.getDB();
     let threads = await db.collection("Threads").find({}).toArray();
@@ -24,9 +24,10 @@ const createThread = async (playerUser1, threadName, playerUser2) => {
       let thread = threads.find(
         (thread) =>
           thread.participants.find((member) => member.id.communicationUserId === sender.spoolID) !=
-          undefined &&
-          thread.participants.find((member) => member.id.communicationUserId === receiver.spoolID) !=
           undefined
+          // &&
+          // thread.participants.find((member) => member.id.communicationUserId === receiver.spoolID) !=
+          // undefined
       );
 
       if (thread != undefined) {
@@ -49,21 +50,23 @@ const createThread = async (playerUser1, threadName, playerUser2) => {
           id: {
             communicationUserId: await spoolService.getSpoolID(playerUser1, 'Player1')
           },
-          displayName: sender.name
+          displayName: sender.name 
         },
-        {
-          id: {
-            communicationUserId: await spoolService.getSpoolID(playerUser2, 'Player2')
-          },
-          displayName: receiver.name
-        },
+        // {
+        //   id: {
+        //     communicationUserId: await spoolService.getSpoolID(playerUser2, 'Player2')
+        //   },
+        //   displayName: receiver.name,
+        //   groupId: ''
+        // },
       ],
+      groupId: '',
     };
     let endpointUrl = config.endpoint;
 
     // actual call to create the thread
     // console.log("initializing chat client...");
-    // console.log(sender.spoolToken);
+    console.log(sender.spoolToken);
     let chatClient = new ChatClient(endpointUrl, new CommunicationUserCredential(sender.spoolToken));
 
     // console.log("creating thread...");
@@ -85,6 +88,65 @@ const createThread = async (playerUser1, threadName, playerUser2) => {
   }
 };
 
+const updateGroupId = async(threadId, groupId) => {
+  try {
+    var db = dbClient.getDB();
+    let results = await threadService.updateGroupLocator(threadId, groupId);
+
+    if (results) {
+      return { "message" : groupId }
+    } else {
+      return { "message" : "Failed to update group id." }
+    }
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+}
+
+// find available games and get group id to join
+const findChat = async (playerEmail) => {
+  try {
+    var db = dbClient.getDB();
+    let threads = await db.collection("Threads").find({}).toArray();
+    let player = await userService.findUser(playerEmail);
+
+    if (threads != undefined && threads.length > 0 && player != null) {
+      let threads = await db.collection("Threads").find({}).toArray();
+
+      if (threads != undefined && threads.length > 0) {
+        // check if thread exists
+        let thread = threads.find(
+          (thread) =>
+            thread.participants.length < 2
+        );
+
+        if (thread != undefined && thread != null) {
+          thread.participants.push({
+              "id" : { "communicationUserId": player.spoolID },
+              "displayName": player.name
+            })
+  
+          db.collection("Threads").update({ _id: thread._id }, thread, (err, result) => {
+            if (err) console.log(err)
+          });
+        } else {
+          console.log('No threads available. Created new thread ')
+          let resp =  createThread(playerEmail, player + "'s Game");
+          return resp;
+        }
+      }
+    } else {
+      console.log('No threads available. Created new thread ')
+      let resp =  createThread(playerEmail, player + "'s Game");
+      return resp;
+    }
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+}
+
 // intialize a chat
 // add second user to the thread
 // return acknowledgment
@@ -92,3 +154,5 @@ const addUserToThread = (adminUsername, token, usernameToAdd, threadId) => { };
 
 exports.createThread = createThread;
 exports.addUserToThread = addUserToThread;
+exports.updateGroupId = updateGroupId;
+exports.findChat = findChat;
