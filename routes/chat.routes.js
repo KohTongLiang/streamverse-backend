@@ -15,6 +15,6 @@ router.post('/addUserToThread', chatController.addUserToThread)
 router.post('/updateGroupId', chatController.updateGroupId)
 
 // 4. /findChat
-router.get('/findChat', chatController.findChat)
+router.post('/findChat', chatController.findChat)
 
 module.exports = router;
