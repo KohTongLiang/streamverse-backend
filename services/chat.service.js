@@ -25,14 +25,9 @@ const createThread = async (playerUser1, threadName, groupId) => {
         (thread) =>
           thread.participants.find((member) => member.id.communicationUserId === sender.spoolID) !=
           undefined
-          // &&
-          // thread.participants.find((member) => member.id.communicationUserId === receiver.spoolID) !=
-          // undefined
       );
 
       if (thread != undefined) {
-        //console.log("thread already exists...");
-        //console.log(thread);
         return thread;
       }
     }
@@ -52,13 +47,6 @@ const createThread = async (playerUser1, threadName, groupId) => {
           },
           displayName: sender.name 
         },
-        // {
-        //   id: {
-        //     communicationUserId: await spoolService.getSpoolID(playerUser2, 'Player2')
-        //   },
-        //   displayName: receiver.name,
-        //   groupId: ''
-        // },
       ],
       groupId: groupId,
     };
@@ -122,6 +110,7 @@ const findChat = async (playerEmail) => {
         );
 
         if (thread != undefined && thread != null) {
+          let opponentId = thread.participants[0].id.communicationUserId;
           thread.participants.push({
               "id" : { "communicationUserId": player.spoolID },
               "displayName": player.name
@@ -131,7 +120,7 @@ const findChat = async (playerEmail) => {
             if (err) console.log(err)
           });
 
-          return { "threadId" : thread.threadId, "groupId": thread.groupId }
+          return { "threadId" : thread.threadId, "groupId": thread.groupId, "opponentId": opponentId }
         } else {
           console.log('No threads available. Created new thread ')
           return { "groupId" : null };
