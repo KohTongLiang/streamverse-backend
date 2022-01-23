@@ -11,7 +11,7 @@ const dbClient = require("../db/index");
 // return a thread after provisioning
 // return a thread if already exists between
 // the given two pair of users
-const createThread = async (playerUser1, threadName) => {
+const createThread = async (playerUser1, threadName, groupId) => {
   try {
     let sender = await userService.findUser(playerUser1);
     // let receiver = await userService.findUser(playerUser2);
@@ -60,7 +60,7 @@ const createThread = async (playerUser1, threadName) => {
         //   groupId: ''
         // },
       ],
-      groupId: '',
+      groupId: groupId,
     };
     let endpointUrl = config.endpoint;
 
@@ -130,6 +130,8 @@ const findChat = async (playerEmail) => {
           db.collection("Threads").update({ _id: thread._id }, thread, (err, result) => {
             if (err) console.log(err)
           });
+
+          return { "threadId" : thread.threadId, "groupId": thread.groupId }
         } else {
           console.log('No threads available. Created new thread ')
           let resp =  createThread(playerEmail, player + "'s Game");
