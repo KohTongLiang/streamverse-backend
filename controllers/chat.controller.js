@@ -3,7 +3,7 @@ const chatService = require('../services/chat.service');
 
 const createThread = async (req, res) => {
     let primaryUsername = req.body.playerEmail;
-    let groupId = req.body.groupId;
+    let groupId = req.body.groupId.groupId;
 
     let response = await chatService.createThread(primaryUsername, primaryUsername + "'s game'", groupId);
     res.status(200).json(response);
