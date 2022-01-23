@@ -77,7 +77,7 @@ const createThread = async (playerUser1, threadName, groupId) => {
       //console.log(chatThread);
       threadOptions.threadId = chatThread.chatThread.id;
       await db.collection("Threads").insertOne(threadOptions);
-      return threadOptions;
+      return { "threadId": threadOptions.threadId };
     } catch (e) {
       console.log(e);
       return undefined;
@@ -148,6 +148,21 @@ const findChat = async (playerEmail) => {
   }
 }
 
+const endChat = async (threadId) => {
+  try {
+    var db = dbClient.getDB();
+    await db.collection("Threads").deleteOne({ threadId: threadId }, (err, result) => {
+      if (err !== null) console.log(err);
+
+      return { "message" : "Succesfully end chat." }
+    });
+    
+  } catch (e) {
+    console.log(e);
+    return undefined;
+  }
+}
+
 // intialize a chat
 // add second user to the thread
 // return acknowledgment
@@ -157,3 +172,4 @@ exports.createThread = createThread;
 exports.addUserToThread = addUserToThread;
 exports.updateGroupId = updateGroupId;
 exports.findChat = findChat;
+exports.endChat = endChat;

@@ -27,7 +27,15 @@ const findChat = async (req,res) => {
     res.status(200).json(response);
 }
 
+const endChat = async (req, res) => {
+    let threadId = req.body.threadId;
+    let response = await chatService.endChat(threadId);
+
+    res.status(200).json(response)
+}
+
 exports.createThread = createThread;
 exports.addUserToThread = addUserToThread;
 exports.updateGroupId = updateGroupId;
 exports.findChat = findChat;
+exports.endChat = endChat;

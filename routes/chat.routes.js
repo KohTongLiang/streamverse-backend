@@ -17,4 +17,7 @@ router.post('/updateGroupId', chatController.updateGroupId)
 // 4. /findChat
 router.post('/findChat', chatController.findChat)
 
+// 5. /endChat
+router.post('/endChat', chatController.endChat)
+
 module.exports = router;
