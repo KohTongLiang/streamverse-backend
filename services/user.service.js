@@ -40,6 +40,20 @@ const getUsers = async () => {
   }
 };
 
+const createUser = async (player) => {
+  var db = dbClient.getDB();
+
+  try {
+    await db.collection("Players").insertOne(player, (err, result) => {
+      if (err) return false;
+      return true;
+    })
+  } catch (e) {
+    console.log(e);
+    return false;
+  }
+}
+
 const updateSpoolID = async (spoolID, spoolToken, email) => {
   var db = dbClient.getDB();
   try {
@@ -60,3 +74,4 @@ exports.getUser = getUser;
 exports.findUser = findUser;
 exports.getUsers = getUsers;
 exports.updateSpoolID = updateSpoolID;
+exports.createUser = createUser;

@@ -11,7 +11,6 @@ var http = require('http');
 /**
  * Get port from environment and store in Express.
  */
-
 var port = normalizePort(process.env.PORT || '3001');
 app.set('port', port);
 
@@ -35,6 +34,7 @@ server.on('listening', onListening);
 
 function normalizePort(val) {
   var port = parseInt(val, 10);
+  console.log("Running on " + port)
 
   if (isNaN(port)) {
     // named pipe
@@ -69,6 +69,7 @@ function onError(error) {
       process.exit(1);
       break;
     case 'EADDRINUSE':
+      console.log(port + ' this port')
       console.error(bind + ' is already in use');
       process.exit(1);
       break;
@@ -87,4 +88,5 @@ function onListening() {
     ? 'pipe ' + addr
     : 'port ' + addr.port;
   debug('Listening on ' + bind);
+  console.log("Server started on " + port)
 }

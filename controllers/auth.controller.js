@@ -33,6 +33,42 @@ const login = async (req, res) => {
     }
 }
 
+const signUp = async (req, res) => {
+    const { email, password, name, ethnicity, gender, age, nationality, languages, hobbies } = req.body;
+    const player = {
+        "email": email,
+        "password": password,
+        "name": name,
+        "ethnicity": ethnicity,
+        "gender": gender,
+        "age": age,
+        "nationality": nationality,
+        "languages": languages,
+        "hobbies": hobbies
+    }
+
+    let result = userService.createUser(player);
+    if (result) {
+        var userIdentity = await userService.getUser(email, password)
+        var token = jwt.sign({ email: email, userType: 'Players' }, config.jwtPrivateKey, { expiresIn: '24h' });
+        
+        let tokenResponse = await getTokenResponse(userIdentity)
+
+        // update the users list
+        await userService.updateSpoolID(tokenResponse.communicationUserId, tokenResponse.token, email)
+        res.status(200).json({
+            email: email,
+            token: token,
+            name: userIdentity.name,
+            spoolID: tokenResponse.communicationUserId,
+            spoolToken: tokenResponse.token,
+            userType: 'Player'
+        });
+    } else {
+        res.status(500).json({ "message": "Unsuccessfully registered account." });
+    }
+}
+
 const getTokenResponse = async (userIdentity) => {
     // generate the spool id and token
     const identityClient = new CommunicationIdentityClient(config.connectionString)
@@ -58,3 +94,4 @@ const getTokenResponse = async (userIdentity) => {
 }
 
 exports.login = login;
+exports.signUp = signUp;
