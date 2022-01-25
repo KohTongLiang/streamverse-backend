@@ -20,7 +20,7 @@ dbClient.connect().then(() => {
 // Websocket portion
 // to be moved to a custom middleware
 var gameTracker =  {  }
-const wss = new WebSocket.Server({ port: 8080 });
+const wss = new WebSocket.Server({ port: 80 });
 
 wss.getUniqueID = function () {
   function s4() {
