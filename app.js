@@ -3,11 +3,11 @@ var express = require('express');
 var cors = require('cors');
 var path = require('path');
 // var bodyParser = require('body-parser');
-const WebSocket = require('ws');
 var logger = require('morgan');
-
 var dbClient = require('./db/index')
 var dbInitializationService = require('./db/dbInitialize')
+
+require('dotenv').config({path: path.join(__dirname, '.env')});
 
 console.log('connecting to cosmosdb...')
 dbClient.connect().then(() => {
@@ -17,42 +17,6 @@ dbClient.connect().then(() => {
   console.log(e)
 })
 
-// Websocket portion
-// to be moved to a custom middleware
-var gameTracker =  {  }
-const wss = new WebSocket.Server({ port: 80 });
-
-wss.getUniqueID = function () {
-  function s4() {
-      return Math.floor((1 + Math.random()) * 0x10000).toString(16).substring(1);
-  }
-  return s4() + s4() + '-' + s4();
-};
-
-wss.on('connection', function connection(ws, req) {
-  ws.id = wss.getUniqueID();
-  ws.on('message', function incoming(data) {
-    let inData = JSON.parse(data.toString());
-
-    if (inData.type === "end") {
-      delete gameTracker[inData.groupId];
-      console.log(`Current ongoing games: ${JSON.stringify(gameTracker)}`);
-    } else {
-      if (gameTracker[inData.groupId] === undefined) {
-        gameTracker[inData.groupId] = [ws.id];
-      } else if (!gameTracker[inData.groupId].includes(ws.id)) {
-        gameTracker[inData.groupId].push(ws.id);
-      }
-      console.log(`Current ongoing games: ${JSON.stringify(gameTracker)}`);
-      var receivers = gameTracker[inData.groupId]
-      wss.clients.forEach(function each(client) {
-        if (client !== ws && client.readyState === WebSocket.OPEN && receivers.includes(client.id)) {
-          client.send(JSON.stringify(inData.gameState));
-        }
-      });
-    }
-  });
-});
 
 var indexRouter = require('./routes/index');
 var userProvisionRouter = require('./routes/user.routes');
