@@ -3,9 +3,9 @@
   "version": "1.0.0",
   "author": "Streamverse",
   "license": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
-    "start": "node index"
+    "start": "node server"
   },
   "dependencies": {
     "@azure/communication-calling": "^1.3.2",
