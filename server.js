@@ -38,7 +38,17 @@ wss.on('connection', function connection(ws, req) {
     let inData = JSON.parse(data.toString());
 
     if (inData.type === "end") {
-      delete gameTracker[inData.groupId];
+      var receivers = gameTracker[inData.groupId];
+      wss.clients.forEach((client) => {
+        if (receivers.includes(client.id)) {
+          client.close();
+          receivers.splice(receivers.indexOf(ws.id), 1);
+        }
+      });
+      
+      if (gameTracker[inData.groupId].length <= 0) {
+        delete gameTracker[inData.groupId];
+      }
       console.log(`Current ongoing games: ${JSON.stringify(gameTracker)}`);
     } else {
       if (gameTracker[inData.groupId] === undefined) {
