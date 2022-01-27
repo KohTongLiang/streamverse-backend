@@ -1,11 +1,11 @@
 {
     "cosmosEndpoint": "https://languye-sql-nb3.documents.azure.com:443/",
-    "cosmosKey": "G1Wlxck6MhT6w2LNjKmEObPVWLBbcdAio01Fyh1EYfcJPWt0fszjnuTxLIA8Kyd5T6EhAXYCllkWq8za0TaxHg==",
-    "mongodbConnection": "mongodb://streamversemongodb:gxEaZXHsTN4yobUaN8PFRY5uDLjs6ggsdIIdfzNzTo05fS9r4bk17Mf4F3Nh2ydm7HADyz6scljHvAuTaoSySQ==@streamversemongodb.mongo.cosmos.azure.com:10255/?ssl=true&retrywrites=false&maxIdleTimeMS=120000&appName=@streamversemongodb@",
-    "dbName": "streamversedb",
-    "connectionString": "endpoint=https://streamverse.communication.azure.com/;accesskey=j5tPVp13bNH2s1jRIrz4O/GH4nW48YSTFobcoHJYDacY3N0qljkvKnlmmAViUm0R0kj+97EsHs8r7IA9havS7w==",
-    "jwtPrivateKey": "fna.s,dmnfa.,sdmfnoalskdjhflsdjflmfd.,md;lgkds;lkgjlsgj;flkgjfldk",
-    "endpoint": "https://streamverse.communication.azure.com",
+    "cosmosKey": "P8O0R9luqlmbiJQxUdSGmN2x19lnT6MV6qIZJPwpTdlnfZ3n2m0EuSeengH8CM/uw7YHArvs9CS04ecXxopwvA==",
+    "mongodbConnection": "mongodb://streamversemongo:Em285I0ipDMsreLz5MDxiWEXqwXQl05qjQGfnLa7rCsWEeagPEHU3DhQIkIuxMQQVf7NokEs1fYkg8P7Pd4wzw==@streamversemongo.mongo.cosmos.azure.com:10255/?ssl=true&replicaSet=globaldb&retrywrites=false&maxIdleTimeMS=120000&appName=@streamversemongo@",
+    "dbName": "streamversemongo",
+    "connectionString": "endpoint=https://streamversecommunications.communication.azure.com/;accesskey=P8O0R9luqlmbiJQxUdSGmN2x19lnT6MV6qIZJPwpTdlnfZ3n2m0EuSeengH8CM/uw7YHArvs9CS04ecXxopwvA==",
+    "jwtPrivateKey": "fnasdfasdfa.s,dmnfa.,sdmfnoalskdjhflsdjflmfd.,md;lgkds;lkgjlsgasdfdlkgjflasdf",
+    "endpoint": "https://streamversecommunications.communication.azure.com/",
     "smsLogicAppEndpoint": "<AZURE_COMMUNICATION_SERVICES_SMS_LOGIC_APP_HTTP_TRIGGER_ENDPOINT>",
     "qnaMakerEndpoint": "<QNA_MAKER_ENDPOINT_URL>",
     "qnaMakerEndpointKey": "<QNA_MAKER_ENDPOINT_KEY>"
