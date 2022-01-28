@@ -12,7 +12,7 @@ const login = async (req, res) => {
     // find existing user
     var userIdentity = await userService.getUser(email, password)
 
-    if (userIdentity !== undefined && userIdentity !== null) {
+    if (userIdentity !== undefined && userIdentity !== null && userIdentity !== false) {
         var token = jwt.sign({ email: email, userType: 'Players' }, config.jwtPrivateKey, { expiresIn: '1h' });
         
         let tokenResponse = await getTokenResponse(userIdentity)
@@ -65,7 +65,7 @@ const signUp = async (req, res) => {
             userType: 'Player'
         });
     } else {
-        res.status(500).json({ "message": "Unsuccessfully registered account." });
+        res.status(400).json({ "message": "Unsuccessfully registered account." });
     }
 }
 

@@ -6,7 +6,9 @@ const createThread = async (req, res) => {
     let groupId = req.body.groupId;
 
     let response = await chatService.createThread(primaryUsername, primaryUsername + "'s game'", groupId);
-    res.status(200).json(response);
+
+    if (response) res.status(200).json(response);
+    else res.status(400).json({ "message" : "Failed to create chat. "});
 }
 
 const addUserToThread = async (req, res) => {
@@ -24,7 +26,9 @@ const updateGroupId = async (req, res) => {
 const findChat = async (req,res) => {
     let player = req.body.playerEmail;
     let response = await chatService.findChat(player);
-    res.status(200).json(response);
+
+    if (response) res.status(200).json(response);
+    else res.status(400).json({ "Message" : "Request to server failed." })
 }
 
 const endChat = async (req, res) => {

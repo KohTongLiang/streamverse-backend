@@ -13,7 +13,7 @@ const getUser = async (email, password) => {
     return user;
   }
   catch (e) {
-    return undefined;
+    return false;
   }
 }
 
@@ -24,7 +24,7 @@ const findUser = async (email) => {
     return user;
   }
   catch (e) {
-    return undefined;
+    return false;
   }
 }
 

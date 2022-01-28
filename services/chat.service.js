@@ -127,13 +127,12 @@ const findChat = async (playerEmail) => {
         }
       }
     } else {
-      console.log('No threads available. Created new thread ')
       // let resp =  createThread(playerEmail, player + "'s Game");
       return { "groupId" : null };
     }
   } catch (e) {
     console.log(e);
-    return undefined;
+    return false;
   }
 }
 

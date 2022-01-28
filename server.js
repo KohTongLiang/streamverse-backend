@@ -45,8 +45,8 @@ wss.on('connection', function connection(ws, req) {
           receivers.splice(receivers.indexOf(ws.id), 1);
         }
       });
-      
-      if (gameTracker[inData.groupId].length <= 0) {
+      console.log('Current games' + gameTracker[inData.groupId]);
+      if (receivers.length <= 0) {
         delete gameTracker[inData.groupId];
       }
       console.log(`Current ongoing games: ${JSON.stringify(gameTracker)}`);
