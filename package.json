@@ -3,7 +3,7 @@
   "version": "1.0.0",
   "author": "Streamverse",
   "license": "",
-  "main": "app.js",
+  "main": "server.js",
   "scripts": {
     "start": "node server.js"
   },
