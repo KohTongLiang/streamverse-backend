@@ -40,16 +40,16 @@ wss.on('connection', function connection(ws, req) {
       // terminate connection to client
       var receivers = gameTracker[inData.groupId];
       wss.clients.forEach((client) => {
-        if (receivers.includes(client.id)) {
+        if (receivers.includes(client.id) && client.id === ws.id) {
           client.close();
-          receivers.splice(receivers.indexOf(ws.id), 1);
+          receivers = receivers.filter((e) => { return e !== ws.id });
+          // receivers.splice(ws.id);
         }
       });
-      console.log('Current games' + gameTracker[inData.groupId]);
+      gameTracker[inData.groupId] = receivers
       if (receivers.length <= 0) {
         delete gameTracker[inData.groupId];
       }
-      console.log(`Current ongoing games: ${JSON.stringify(gameTracker)}`);
     } else if (inData.type === "init") {
       // initialize client
       if (gameTracker[inData.groupId] === undefined || gameTracker[inData.groupId] === null) {
@@ -61,10 +61,7 @@ wss.on('connection', function connection(ws, req) {
       }
     } else if (inData.type === "update") {
       // update ongoing gamestates
-      console.log(`Current ongoing games: ${JSON.stringify(gameTracker)}`);
       var receivers = gameTracker[inData.groupId];
-      console.log(inData.groupId)
-      console.log(receivers);
       wss.clients.forEach(function each(client) {
         if (client !== ws && client.readyState === WebSocket.OPEN && receivers.includes(client.id)) {
           client.send(JSON.stringify(inData.gameState));
