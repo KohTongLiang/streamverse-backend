@@ -2,7 +2,7 @@
 
 ## Introduction
 
-This is the backend application for Streamverse - a web-based video call socialising application with some game elements. The codebase is based off an example project from https://github.com/Azure-Samples/communication-services-contoso-med-app which demonstrates how to integrate Azure services.
+This is the backend application for Streamverse - a web-based video call socialising application with some game elements. The codebase is based off an example project from https://github.com/Azure-Samples/communication-services-contoso-med-app which demonstrates how to integrate Azure services. The application was submitted as an entry to Microsoft Imaginecup 2022 but unfortunately we did not make it pass the first round.
 
 ### This backend service provides APIs for the following
 ### General APIs
