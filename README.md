@@ -1,16 +1,16 @@
-# Contoso Med App Node.js Backend Service
-
-![Backend Service running locally at http://localhost:3001/](../docs/acs-node-service.png) *Backend Service running locally at http://localhost:3001/*
+# Streamverse Backend
 
 ## Introduction
-This is the backend service for the [Contoso Med App](../contoso-web-app/) built on Node.js. This connects the client-side application with Azure Communication Services, QnA maker and Azure CosmosDB.
+
+This is the backend application for Streamverse - a web-based video call socialising application with some game elements. The codebase is based off an example project from https://github.com/Azure-Samples/communication-services-contoso-med-app which demonstrates how to integrate Azure services.
 
 ### This backend service provides APIs for the following
 ### General APIs
 - User authentication
-- Doctor and patient information
-- Appointment booking
-- Appointments information
+- Chat management
+
+### Additional services
+- Gamestate sharing
 
 ### Azure Communication Service specific APIs
 - User ID and token generation
@@ -38,26 +38,6 @@ Fill configuration information in the `config.json` file
 
 ```
 
-### Initializing new database
-In `app.js`, find following database connection code
-```Javascript
-console.log('connecting to cosmosdb...')
-dbClient.connect()
-  .then(() => {
-    console.log("connected to the database successfully")
-
-    /* uncomment next line to reset database when application
-     * starts. Appointments in db are flushed and regenerated */
-    //dbInitializationService.initializeDB();
-  })
-  .catch((e) => {
-    console.log(e)
-  })
-```
-
-Uncomment `dbInitializationService.initializeDB()` line if you are connecting to a new database to seed the database with mock patients and doctors data.
-
-You can also reset database by going to `https://{hosted_url}/reset` endpoint.
 
 After you have configured everything, run
 
@@ -70,4 +50,3 @@ and then,
 ```
 npm run start
 ```
-from the [contoso-node-api](./contoso-node-api) directory, this runs the node service on port 3000 at ``` http://localhost:3000 ```
